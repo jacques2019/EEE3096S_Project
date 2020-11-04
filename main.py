@@ -8,6 +8,8 @@ import threading
 import time
 import RPi.GPIO as GPIO
 
+eeprom = ES2EEPROMUtils.ES2EEPROM()
+
 temp_0volt = 0.4
 temp_coefficient = 0.010
 measure_flag = True
@@ -61,8 +63,32 @@ def read_thread():
         print('Runtime\t\tLDR Reading\tLDR Resistance')
         print('{0:.0f}s\t\t{1}\t\t{2:.3f}\t Ohms'.format((currentTime - start_LDR_time), LDR_value, LDR_reading))
 
-def store_readings():
-    pass
+def store_readings(data):
+
+    for i in range(0, 20)
+        # Read block from eeprom
+        current = [0,0,0,0]
+
+        # Populate current with input data
+        if (i < len(data)):
+            current = data[i]
+
+        # Ensures the last blok of data is written with zeroes to mark end of readings
+        if (i > len(data)):
+            break
+        
+        # Store temperature data
+        current[0] = (data[0]&(0xFF00)) >> 8
+        current[1] = (data[0]&(0b0000000011111111))
+        
+        # Store LDR data
+        current[2] = (data[1]&(0xFF00)) >> 8
+        current[3] = (data[1]&(0b0000000011111111))
+
+        data.append([temp, ldr])
+
+    return data
+
 
 def read_LDR_thread():
     global chan_LDR
