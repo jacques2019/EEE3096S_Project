@@ -138,7 +138,8 @@ def btn_measure_callback(channel):
 
     measure_flag = not(measure_flag)
     system('clear')
-    print('Measuring halted')
+    if not(measure_flag):
+        print('Measuring halted')
 
 if __name__ == "__main__":
     setup()
