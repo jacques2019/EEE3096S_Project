@@ -90,33 +90,6 @@ def store_readings(data):
         current[2] = (data[1]&(0xFF00)) >> 8
         current[3] = (data[1]&(0b0000000011111111))
 
-
-def read_LDR_thread():
-    global chan_LDR
-    global start_LDR_time
-    global delayTime
-
-    # Setup thread at set time delay
-    thread = threading.Timer(delayTime, read_LDR_thread)
-    thread.daemon = True
-    thread.start()
-
-    # Set start time
-    currentTime = int(round(time.time()))
-    if (start_LDR_time == 0):
-        start_LDR_time = currentTime
-
-    # Read values from ADC
-    LDR_value = chan_LDR.value
-    LDR_voltage = chan_LDR.voltage
-
-    # Change resisitor voltage to LDR voltage
-    LDR_reading = (3.3 - LDR_voltage) / (LDR_voltage/1000)
-
-    # Print LDR readings
-    print('Runtime\t\tLDR Reading\tLDR Resistance')
-    print('{0:.0f}s\t\t{1}\t\t{2:.3f}\t Ohms'.format((currentTime - start_LDR_time), LDR_value, LDR_reading))
-
 def setup():
     global chan_temp
     global chan_LDR
