@@ -62,8 +62,9 @@ def read_thread():
 
         # Print temp readings
         now_time = time.strftime('%H:%M:%S', time.localtime())
+        then_time = time.strftime('%H:%M:%S', time.localtime((currentTime - start_time)))
         print('System Time\tSys Timer\tLDR Resistance\tTemp')
-        print('{0}\t{1:.0f}s\t\t{2:.3f} Ohms\t{3:.3f} C'.format(now_time, (currentTime - start_time), LDR_reading, temp))
+        print('{0}\t{1:.0f}s\t\t{2:.3f} Ohms\t{3:.3f} C'.format(now_time, then_time, LDR_reading, temp))
         
         # Save readings to EEPROM
         readings.append([temp_value, LDR_value])
