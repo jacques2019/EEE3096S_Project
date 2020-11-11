@@ -7,6 +7,7 @@ from adafruit_mcp3xxx.analog_in import AnalogIn
 import threading
 import time
 import RPi.GPIO as GPIO
+from os import system
 
 eeprom = ES2EEPROMUtils.ES2EEPROM()
 
@@ -60,11 +61,13 @@ def read_thread():
         # Convert to Temp
         temp = (temp_voltage - temp_0volt)/temp_coefficient
 
-        # Print temp readings
+        # Setup time strings
         now_time = time.strftime('%H:%M:%S', time.localtime())
         then_time = time.strftime('%H:%M:%S', time.localtime((currentTime - start_time)))
+
+        # Print temp readings
         print('System Time\tSys Timer\tLDR Resistance\tTemp')
-        print('{0}\t{1}\t\t{2:.3f} Ohms\t{3:.3f} C'.format(now_time, then_time, LDR_reading, temp))
+        print('{0}\t{1}\t{2:.3f} Ohms\t{3:.3f} C'.format(now_time, then_time, LDR_reading, temp))
         
         # Save readings to EEPROM
         readings.append([temp_value, LDR_value])
@@ -134,6 +137,8 @@ def btn_measure_callback(channel):
     global measure_flag
 
     measure_flag = not(measure_flag)
+    system('clear')
+    print('Measuring halted')
 
 if __name__ == "__main__":
     setup()
