@@ -62,7 +62,7 @@ def read_thread():
 
         # Print temp readings
         print('Runtime\t\tLDR Resistance\tTemp')
-        print('{0:.0f}s\t\t{1:.3f}\t Ohms\t\t{2:.3f}\t C'.format((currentTime - start_time), LDR_reading, temp))
+        print('{0:.0f}s\t\t{1:.3f} Ohms\t{2:.3f} C'.format((currentTime - start_time), LDR_reading, temp))
 
         # Print LDR readings
         #print('Runtime\t\tLDR Reading\tLDR Resistance')
