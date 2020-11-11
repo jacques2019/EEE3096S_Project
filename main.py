@@ -80,19 +80,20 @@ def store_readings(data):
 
         # Populate current with input data
         if (i < len(data)):
-            current = data[i]
+            current[2] = data[i][0]
+            current[3] = data[i][1]
 
         # Ensures the last blok of data is written with zeroes to mark end of readings
         if (i > len(data)):
             break
         
         # Store temperature data
-        current[0] = (data[0]&(0xFF00)) >> 8
-        current[1] = (data[0]&(0b0000000011111111))
+        current[0] = (current[2]&(0xFF00)) >> 8
+        current[1] = (current[2]&(0b0000000011111111))
         
         # Store LDR data
-        current[2] = (data[1]&(0xFF00)) >> 8
-        current[3] = (data[1]&(0b0000000011111111))
+        current[2] = (current[3]&(0xFF00)) >> 8
+        current[3] = (current[3]&(0b0000000011111111))
 
 def setup():
     global chan_temp
