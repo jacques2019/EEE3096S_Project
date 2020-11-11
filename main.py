@@ -68,6 +68,9 @@ def read_thread():
         # Save readings to EEPROM
         readings.append([temp_value, LDR_value])
 
+        if (length(readings) > 20):
+            readings.pop(20)
+
         thread = threading.Thread(target=store_readings, args=(readings,))
         thread.daemon = True
         thread.start()
