@@ -19,17 +19,18 @@ chan_LDR = None
 btn_delay = 22
 btn_measure = 27
 
-
 start_time = 0
 start_LDR_time = 0
-
 delayTime = 10
+
+readings = []
 
 def read_thread():
     global chan_temp
-    global start_temp_time
+    global start_time
     global delayTime
     global chan_LDR
+    global readings
 
     # Setup thread at set time delay
     thread = threading.Timer(delayTime, read_thread)
@@ -57,15 +58,19 @@ def read_thread():
 
         # Print temp readings
         print('Runtime\t\tTemp Reading\tTemp')
-        print('{0:.0f}s\t\t{1}\t\t{2:.3f}\t\t C'.format((currentTime - start_temp_time), temp_value, temp))
+        print('{0:.0f}s\t\t{1}\t\t{2:.3f}\t\t C'.format((currentTime - start_time), temp_value, temp))
 
         # Print LDR readings
         print('Runtime\t\tLDR Reading\tLDR Resistance')
-        print('{0:.0f}s\t\t{1}\t\t{2:.3f}\t Ohms'.format((currentTime - start_LDR_time), LDR_value, LDR_reading))
+        print('{0:.0f}s\t\t{1}\t\t{2:.3f}\t Ohms'.format((currentTime - start_time), LDR_value, LDR_reading))
+        
+        # Save readings to EEPROM
+        readings.append([temp_value, LDR_value])
+
+        store_readings(readings)
 
 def store_readings(data):
-
-    for i in range(0, 20)
+    for i in range(0, 20):
         # Read block from eeprom
         current = [0,0,0,0]
 
@@ -84,10 +89,6 @@ def store_readings(data):
         # Store LDR data
         current[2] = (data[1]&(0xFF00)) >> 8
         current[3] = (data[1]&(0b0000000011111111))
-
-        data.append([temp, ldr])
-
-    return data
 
 
 def read_LDR_thread():
