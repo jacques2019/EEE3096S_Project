@@ -42,6 +42,10 @@ def read_thread():
     if (start_time == 0):
         start_time = currentTime
 
+    print("Flag: {0}".format(measure_flag))
+    print("start_time: {0}".format(start_time))
+    print("delay_time: {0}".format(delayTime))
+
     if (measure_flag):
         # Read values from ADC
         temp_voltage = chan_temp.voltage
