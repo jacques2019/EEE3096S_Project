@@ -61,9 +61,9 @@ def read_thread():
         temp = (temp_voltage - temp_0volt)/temp_coefficient
 
         # Print temp readings
-        now_time = time.now.strftime("%H:%M:%S")
+        now_time = time.strftime('%H:%M:%S', time.localtime())
         print('System Time\tRuntime\tLDR Resistance\tTemp')
-        print('{1:.0f}s\t{2:.3f} Ohms\t{3:.3f} C'.format(now_time, (currentTime - start_time), LDR_reading, temp))
+        print('{0}\t{1:.0f}s\t{2:.3f} Ohms\t{3:.3f} C'.format(now_time, (currentTime - start_time), LDR_reading, temp))
         
         # Save readings to EEPROM
         readings.append([temp_value, LDR_value])
