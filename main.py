@@ -68,7 +68,7 @@ def read_thread():
         # Save readings to EEPROM
         readings.append([temp_value, LDR_value])
 
-        if (length(readings) > 20):
+        if (len(readings) > 20):
             readings.pop(20)
 
         thread = threading.Thread(target=store_readings, args=(readings,))
@@ -96,6 +96,8 @@ def store_readings(data):
         # Store LDR data
         current[2] = (current[3]&(0xFF00)) >> 8
         current[3] = (current[3]&(0b0000000011111111))
+
+        eeprom.write_block(i, current)
 
 def setup():
     global chan_temp
